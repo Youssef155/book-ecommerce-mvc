@@ -1,5 +1,7 @@
 ﻿@model List<Category>
 
+<partial name="_NotificationPartialView" />
+
 <div class="container">
     <div class="row pt-4 pb-3">
         <div class="col-6">
@@ -26,6 +28,16 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.DisplayOrder</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Category" asp-route-Id="@item.Id" class="btn btn-danger">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
