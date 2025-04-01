@@ -1,4 +1,6 @@
 ﻿using BookEcommerce.DataAccess.Data;
+using BookEcommerce.DataAccess.Repository;
+using BookEcommerce.DataAccess.Repository.Interfaces;
 using BookEcommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,15 +9,15 @@ namespace BookEcommerce.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public CategoryController(ApplicationDbContext context)
+        private readonly ICategoryRepository _categoryRepository;
+        public CategoryController(ICategoryRepository _categoryRepository)
         {
-            _context = context;
+            this._categoryRepository = _categoryRepository;
         }
 
         public IActionResult Index()
         {
-            List<Category> catList = _context.Categories.ToList();
+            List<Category> catList = _categoryRepository.GetAll().ToList();
             return View(catList);
         }
 
@@ -27,8 +29,7 @@ namespace BookEcommerce.Web.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+            _categoryRepository.Add(category);
             TempData["success"] = "Category is created successfully";
             return RedirectToAction("Index");
         }
@@ -38,7 +39,7 @@ namespace BookEcommerce.Web.Controllers
             if (id is null || id == 0)
                 return NotFound();
 
-            Category? category = _context.Categories.Find(id);
+            Category? category = _categoryRepository.Get(c => c.Id == id);
 
             if (category is null)
                 return NotFound();
@@ -49,8 +50,7 @@ namespace BookEcommerce.Web.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            _context.Categories.Update(category);
-            _context.SaveChanges();
+            _categoryRepository.Update(category);
             TempData["success"] = "Category is updated successfully";
             return RedirectToAction("Index");
         }
@@ -60,7 +60,7 @@ namespace BookEcommerce.Web.Controllers
             if (id is null || id == 0)
                 return NotFound();
 
-            Category? category = _context.Categories.Find(id);
+            Category? category = _categoryRepository.Get(c => c.Id == id);
 
             if (category is null)
                 return NotFound();
@@ -75,13 +75,12 @@ namespace BookEcommerce.Web.Controllers
             if (id is null || id == 0)
                 return NotFound();
 
-            Category? category = _context.Categories.Find(id);
+            Category? category = _categoryRepository.Get(c => c.Id == id);
 
             if (category is null)
                 return NotFound();
 
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
+            _categoryRepository.Remove(category);
             TempData["success"] = "Category is deleted successfully";
             return RedirectToAction("Index");
         }

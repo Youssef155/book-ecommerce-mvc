@@ -1,4 +1,6 @@
 using BookEcommerce.DataAccess.Data;
+using BookEcommerce.DataAccess.Repository;
+using BookEcommerce.DataAccess.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ var conString = builder.Configuration.GetConnectionString("DefaultConnection") ?
     " not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(conString));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
