@@ -1,4 +1,4 @@
-using BookEcommerce.Web.Data;
+using BookEcommerce.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

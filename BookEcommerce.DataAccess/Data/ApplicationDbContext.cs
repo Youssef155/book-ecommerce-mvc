@@ -1,7 +1,7 @@
-﻿using BookEcommerce.Web.Models;
+﻿using BookEcommerce.Models; 
 using Microsoft.EntityFrameworkCore;
 
-namespace BookEcommerce.Web.Data
+namespace BookEcommerce.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
