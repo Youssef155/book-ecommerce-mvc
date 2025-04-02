@@ -27,17 +27,26 @@ namespace BookEcommerce.DataAccess.Repository
             _context.SaveChanges();
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string[] includes = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
 
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string[] includes = null)
         {
             IQueryable<T> query = dbSet;
+
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
+
             return query.ToList();
         }
 

@@ -20,7 +20,7 @@ public class ProductController : Controller
     }
     public IActionResult Index()
     {
-        List<Product> products = _unitOfWork.Product.GetAll().ToList();
+        List<Product> products = _unitOfWork.Product.GetAll(new string[] { "Category" }).ToList();
         return View(products);
     }
 
