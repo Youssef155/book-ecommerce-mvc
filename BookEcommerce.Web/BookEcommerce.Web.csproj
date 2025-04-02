@@ -21,4 +21,8 @@
     <ProjectReference Include="..\BookEcommerce.Models\BookEcommerce.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
