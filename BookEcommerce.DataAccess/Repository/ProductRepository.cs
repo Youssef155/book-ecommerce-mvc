@@ -19,7 +19,22 @@ namespace BookEcommerce.DataAccess.Repository
 
         public void Update(Product product)
         {
-            _context.Update(product);
+            var oldProduct = _context.Products.FirstOrDefault(p => p.Id == product.Id);
+            if(oldProduct != null)
+            {
+                oldProduct.ISBN = product.ISBN;
+                oldProduct.ListPrice = product.ListPrice;
+                oldProduct.Price = product.Price;
+                oldProduct.Price50 = product.Price50;
+                oldProduct.Price100 = product.Price100;
+                oldProduct.Author = product.Author;
+                oldProduct.Description = product.Description;
+                oldProduct.CategoryId = product.CategoryId;
+                oldProduct.Title = product.Title;
+                if (product.ImgUrl != null)
+                    oldProduct.ImgUrl = product.ImgUrl;
+            }
+
             _context.SaveChanges();
         }
     }
