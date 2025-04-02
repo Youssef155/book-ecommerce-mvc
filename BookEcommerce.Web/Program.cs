@@ -14,7 +14,7 @@ var conString = builder.Configuration.GetConnectionString("DefaultConnection") ?
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(conString));
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
