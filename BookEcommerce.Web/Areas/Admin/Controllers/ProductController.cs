@@ -1,7 +1,9 @@
 ﻿using BookEcommerce.DataAccess.Repository;
 using BookEcommerce.DataAccess.Repository.Interfaces;
 using BookEcommerce.Models;
+using BookEcommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookEcommerce.Web.Areas.Admin.Controllers;
 
@@ -21,13 +23,24 @@ public class ProductController : Controller
 
     public IActionResult Create()
     {
-        return View();
+        ProductVM productVM = new()
+        {
+            CategoryList = _unitOfWork.Category
+            .GetAll().Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            }),
+            Product = new Product()
+        };
+
+        return View(productVM);
     }
 
     [HttpPost]
-    public IActionResult Create(Product product)
+    public IActionResult Create(ProductVM vm)
     {
-        _unitOfWork.Product.Add(product);
+        _unitOfWork.Product.Add(vm.Product);
         TempData["success"] = "Product is created successfully";
         return RedirectToAction("Index");
     }
