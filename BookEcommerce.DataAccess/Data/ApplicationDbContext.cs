@@ -1,5 +1,4 @@
 ﻿using BookEcommerce.Models;
-using BookEcommerce.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookEcommerce.DataAccess.Data

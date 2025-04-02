@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookEcommerce.Models.Models
+namespace BookEcommerce.Models
 {
     public class Product
     {

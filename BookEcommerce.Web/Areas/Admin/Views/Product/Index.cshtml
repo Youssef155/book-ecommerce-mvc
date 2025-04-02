@@ -1,0 +1,50 @@
+﻿@model List<Product>
+
+<partial name="_NotificationPartialView" />
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h3>Category List</h3>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Category
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.ISBN</td>
+                <td>@item.Author</td>
+                <td>@item.Price</td>
+                <td>@item.ISBN</td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-primary">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-danger">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

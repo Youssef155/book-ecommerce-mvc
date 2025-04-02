@@ -1,6 +1,6 @@
 ﻿using BookEcommerce.DataAccess.Data;
 using BookEcommerce.DataAccess.Repository.Interfaces;
-using BookEcommerce.Models.Models;
+using BookEcommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

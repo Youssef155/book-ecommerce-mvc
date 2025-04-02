@@ -1,4 +1,4 @@
-﻿using BookEcommerce.Models.Models;
+﻿using BookEcommerce.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
