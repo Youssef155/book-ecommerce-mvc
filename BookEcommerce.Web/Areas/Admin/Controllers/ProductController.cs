@@ -21,7 +21,7 @@ public class ProductController : Controller
         return View(products);
     }
 
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
     {
         ProductVM productVM = new()
         {
@@ -34,35 +34,23 @@ public class ProductController : Controller
             Product = new Product()
         };
 
-        return View(productVM);
+        if(id == null || id == 0)
+        {
+            // create
+            return View(productVM);
+        }
+        else
+        {
+            productVM.Product = _unitOfWork.Product.Get(p => p.Id == id);
+            return View(productVM);
+        }
     }
 
     [HttpPost]
-    public IActionResult Create(ProductVM vm)
+    public IActionResult Upsert(ProductVM vm, IFormFile? file)
     {
         _unitOfWork.Product.Add(vm.Product);
         TempData["success"] = "Product is created successfully";
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Edit(int? id)
-    {
-        if (id is null || id == 0)
-            return NotFound();
-
-        Product? product = _unitOfWork.Product.Get(c => c.Id == id);
-
-        if (product is null)
-            return NotFound();
-
-        return View(product);
-    }
-
-    [HttpPost]
-    public IActionResult Edit(Product product)
-    {
-        _unitOfWork.Product.Update(product);
-        TempData["success"] = "Product is updated successfully";
         return RedirectToAction("Index");
     }
 
