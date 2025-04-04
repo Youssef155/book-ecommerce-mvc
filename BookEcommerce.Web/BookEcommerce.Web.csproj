@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookEcommerce.DataAccess\BookEcommerce.DataAccess.csproj" />
     <ProjectReference Include="..\BookEcommerce.Models\BookEcommerce.Models.csproj" />
+    <ProjectReference Include="..\BookEcommerce.Utilities\BookEcommerce.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

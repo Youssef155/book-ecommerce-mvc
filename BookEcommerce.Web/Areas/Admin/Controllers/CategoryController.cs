@@ -2,12 +2,15 @@
 using BookEcommerce.DataAccess.Repository;
 using BookEcommerce.DataAccess.Repository.Interfaces;
 using BookEcommerce.Models;
+using BookEcommerce.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookEcommerce.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
+[Authorize(Roles = StaticDetails.Role_Admin)]
 public class CategoryController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
