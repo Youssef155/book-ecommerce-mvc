@@ -10,5 +10,6 @@ namespace BookEcommerce.DataAccess.Repository.Interfaces
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
+        ICompanyRepository Company { get; }
     }
 }
