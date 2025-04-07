@@ -27,9 +27,15 @@ namespace BookEcommerce.DataAccess.Repository
             _context.SaveChanges();
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string[] includes = null)
+        public T Get(Expression<Func<T, bool>> filter, string[] includes = null, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+
+            if (tracked)
+                query = dbSet;
+            else
+                query = dbSet.AsNoTracking();
+
             query = query.Where(filter);
 
             if (includes != null)
