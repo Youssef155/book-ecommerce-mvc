@@ -13,5 +13,6 @@ namespace BookEcommerce.DataAccess.Repository.Interfaces
         ICompanyRepository Company { get; }
         IShoppingCartRepository ShoppingCart { get; }
         IApplicationUserRepository ApplicationUser { get; }
+        void Save();
     }
 }

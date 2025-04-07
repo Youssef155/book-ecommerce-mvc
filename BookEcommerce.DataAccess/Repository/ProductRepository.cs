@@ -34,8 +34,6 @@ namespace BookEcommerce.DataAccess.Repository
                 if (product.ImgUrl != null)
                     oldProduct.ImgUrl = product.ImgUrl;
             }
-
-            _context.SaveChanges();
         }
     }
 }

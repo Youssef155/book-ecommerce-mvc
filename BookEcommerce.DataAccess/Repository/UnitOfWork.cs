@@ -27,5 +27,10 @@ namespace BookEcommerce.DataAccess.Repository
             ShoppingCart = new ShoppingCartRepository(_context);
             ApplicationUser = new ApplicationUserRepository(_context);
         }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

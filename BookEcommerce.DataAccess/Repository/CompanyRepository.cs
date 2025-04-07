@@ -21,7 +21,6 @@ namespace BookEcommerce.DataAccess.Repository
         public void Update(Company company)
         {
             _context.Update(company);
-            _context.SaveChanges();
         }
     }
 }

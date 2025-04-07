@@ -90,6 +90,8 @@ public class ProductController : Controller
             _unitOfWork.Product.Update(vm.Product);
         }
 
+        _unitOfWork.Save();
+
         TempData["success"] = "Product is created successfully";
         return RedirectToAction("Index");
     }
@@ -120,6 +122,7 @@ public class ProductController : Controller
         }
 
         _unitOfWork.Product.Remove(productToBeDeleted);
+        _unitOfWork.Save();
 
         return Json(new { success = true, message = "The product was deleted successfully" });
     }

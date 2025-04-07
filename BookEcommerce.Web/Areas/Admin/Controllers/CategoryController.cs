@@ -35,6 +35,8 @@ public class CategoryController : Controller
     public IActionResult Create(Category category)
     {
         _unitOfWork.Category.Add(category);
+        _unitOfWork.Save();
+
         TempData["success"] = "Category is created successfully";
         return RedirectToAction("Index");
     }
@@ -56,6 +58,8 @@ public class CategoryController : Controller
     public IActionResult Edit(Category category)
     {
         _unitOfWork.Category.Update(category);
+        _unitOfWork.Save();
+
         TempData["success"] = "Category is updated successfully";
         return RedirectToAction("Index");
     }
@@ -86,6 +90,8 @@ public class CategoryController : Controller
             return NotFound();
 
         _unitOfWork.Category.Remove(category);
+        _unitOfWork.Save();
+
         TempData["success"] = "Category is deleted successfully";
         return RedirectToAction("Index");
     }

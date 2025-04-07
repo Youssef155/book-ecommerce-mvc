@@ -24,7 +24,6 @@ namespace BookEcommerce.DataAccess.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
-            _context.SaveChanges();
         }
 
         public T Get(Expression<Func<T, bool>> filter, string[] includes = null, bool tracked = false)
@@ -59,13 +58,11 @@ namespace BookEcommerce.DataAccess.Repository
         public void Remove(T entity)
         {
             dbSet.Remove(entity);
-            _context.SaveChanges();
         }
 
         public void RemoveRange(T entities)
         {
             dbSet.RemoveRange(entities);
-            _context.SaveChanges();
         }
     }
 }

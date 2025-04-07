@@ -50,6 +50,8 @@ public class CompanyController : Controller
             _unitOfWork.Company.Update(company);
         }
 
+        _unitOfWork.Save();
+
         TempData["success"] = "Company was created successfully";
         return RedirectToAction("Index");
     }
@@ -73,6 +75,7 @@ public class CompanyController : Controller
         }
 
         _unitOfWork.Product.Remove(companyToBeDeleted);
+        _unitOfWork.Save();
 
         return Json(new { success = true, message = "The company was deleted successfully" });
     }

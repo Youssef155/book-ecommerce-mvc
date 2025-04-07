@@ -20,7 +20,6 @@ namespace BookEcommerce.DataAccess.Repository
         public void Update(Category category)
         {
             _context.Update(category);
-            _context.SaveChanges();
         }
     }
 }
