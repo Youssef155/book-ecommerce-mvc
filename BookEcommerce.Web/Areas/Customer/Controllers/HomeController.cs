@@ -59,10 +59,11 @@ public class HomeController : Controller
         {
             // cart exists
             cartFromDb.Count += shoppingCart.Count;
-            //_unitOfWork.ShoppingCart.Update(cartFromDb);
+            _unitOfWork.ShoppingCart.Update(cartFromDb);
         }
 
         _unitOfWork.Save();
+        TempData["success"] = "Cart updated successfully";
 
         return RedirectToAction(nameof(Index));
     }
