@@ -44,9 +44,11 @@ namespace BookEcommerce.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string[] includes = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string[] includes = null)
         {
             IQueryable<T> query = dbSet;
+            if(filter != null)
+                query = query.Where(filter);
 
             if (includes != null)
                 foreach (var include in includes)

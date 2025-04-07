@@ -9,6 +9,7 @@ using BookEcommerce.DataAccess.Data;
 namespace BookEcommerce.Web.Areas.Customer.Controllers;
 
 [Area("Customer")]
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -24,7 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var productList = _unitOfWork.Product.GetAll(new string[] { "Category" });
+        var productList = _unitOfWork.Product.GetAll(null, new string[] { "Category" });
         return View(productList);
     }
 
