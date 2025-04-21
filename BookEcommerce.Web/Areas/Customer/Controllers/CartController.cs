@@ -131,15 +131,15 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
                 {
                     SuccessUrl = domain + $"/customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
                     CancelUrl = domain + "/customer/cart/index",
-                    LineItems = new List<Stripe.Checkout.SessionLineItemOptions>
-                {
-                    new SessionLineItemOptions
-                    {
-                        Price = "price_1MotwRLkdIwHu7ixYcPLm5uZ",
-                        Quantity = 2,
-                    },
-                },
-                    Mode = "payment",
+                    LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
+                    //{
+                    //    new SessionLineItemOptions
+                    //    {
+                    //        Price = "price_1MotwRLkdIwHu7ixYcPLm5uZ",
+                    //        Quantity = 2,
+                    //    },
+                    //},
+                    Mode = "payment"
                 };
 
                 foreach (var item in ShoppingCartVM.ShoppingCartList)
