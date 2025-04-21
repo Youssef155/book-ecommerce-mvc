@@ -11,6 +11,7 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
 
         public CartController(IUnitOfWork unitOfWork)
@@ -73,7 +74,7 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
         public IActionResult SummaryPost(ShoppingCartVM shoppingCartVM)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(s => s.ApplicationUserId == userId,
                 new string[] { "Product" });
@@ -81,14 +82,8 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
             ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+            ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-            ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
-            ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
-            ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
-            ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
-            ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
-            ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetName;
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
@@ -96,9 +91,9 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
             }
 
-            if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
-                // it is a regular user account and we need to capture the payment
+                // it is a regular user account.
                 ShoppingCartVM.OrderHeader.PaymentStatus = StaticDetails.PaymentStatusPending;
                 ShoppingCartVM.OrderHeader.OrderStatus = StaticDetails.StatusPending;
             }
@@ -123,6 +118,12 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
                 };
                 _unitOfWork.OrderDetail.Add(detail);
                 _unitOfWork.Save();
+            }
+
+            if (applicationUser.CompanyId.GetValueOrDefault()==0)
+            {
+                // it is a regular user account and we need to capture the payment
+                // strip logic
             }
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
