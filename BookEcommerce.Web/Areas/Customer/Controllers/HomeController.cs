@@ -5,6 +5,8 @@ using BookEcommerce.DataAccess.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using BookEcommerce.DataAccess.Data;
+using BookEcommerce.Utilities;
+using Microsoft.AspNetCore.Http;
 
 namespace BookEcommerce.Web.Areas.Customer.Controllers;
 
@@ -55,15 +57,19 @@ public class HomeController : Controller
         {
             // no cart exists
             _unitOfWork.ShoppingCart.Add(shoppingCart);
+            _unitOfWork.Save();
+
+            HttpContext.Session.SetInt32(StaticDetails.SessionCart,
+                _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == userId).Count());
         }
         else
         {
             // cart exists
             cartFromDb.Count += shoppingCart.Count;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
+            _unitOfWork.Save();
         }
 
-        _unitOfWork.Save();
         TempData["success"] = "Cart updated successfully";
 
         return RedirectToAction(nameof(Index));
