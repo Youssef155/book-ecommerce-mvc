@@ -27,6 +27,15 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var clainmsIdentity = (ClaimsIdentity)User.Identity;
+        var claim = clainmsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+        if(claim != null)
+        {
+            HttpContext.Session.SetInt32(StaticDetails.SessionCart,
+                _unitOfWork.ShoppingCart.GetAll(c => c.ApplicationUserId == claim.Value).Count());
+        }
+
         var productList = _unitOfWork.Product.GetAll(null, new string[] { "Category" });
         return View(productList);
     }
