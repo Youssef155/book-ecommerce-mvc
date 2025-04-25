@@ -172,6 +172,33 @@ namespace BookEcommerce.Web.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, 
+                new string[] {"ApplicationUser"});
+
+            if(orderHeader.PaymentStatus != StaticDetails.PaymentStatusDelayedPayment)
+            {
+                // this is a customer order
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if(session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentId(id, orderHeader.SessionId, 
+                        orderHeader.PaymentIntentId);
+
+                    _unitOfWork.OrderHeader.UpdateStatus(id, StaticDetails.StatusApproved, 
+                        StaticDetails.PaymentStatusApproved);
+
+                    _unitOfWork.Save();
+                }
+            }
+
+            List<ShoppingCart> carts = _unitOfWork.ShoppingCart
+                .GetAll(c => c.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+            _unitOfWork.ShoppingCart.RemoveRange(carts);
+            _unitOfWork.Save();
+
             return View(id);
         }
 

@@ -13,6 +13,6 @@ namespace BookEcommerce.DataAccess.Repository.Interfaces
         T Get(Expression<Func<T, bool>> filter, string[] includes = null, bool tracked = false);
         void Add(T entity);
         void Remove(T entity);
-        void RemoveRange(T entities);
+        void RemoveRange(List<T> entities);
     }
 }

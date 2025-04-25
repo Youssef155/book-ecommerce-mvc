@@ -62,7 +62,7 @@ namespace BookEcommerce.DataAccess.Repository
             dbSet.Remove(entity);
         }
 
-        public void RemoveRange(T entities)
+        public void RemoveRange(List<T> entities)
         {
             dbSet.RemoveRange(entities);
         }
